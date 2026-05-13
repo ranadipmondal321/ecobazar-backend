@@ -38,8 +38,19 @@ app.get('/', (req, res) => {
 });
 
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, async () => {
-    await connectDB(); 
-    console.log(`Server running at http://localhost:${PORT}`);
-});
+
+const startServer = async () => {
+  try {
+    await connectDB();
+
+    app.listen(PORT, () => {
+      console.log(`Server running on port ${PORT}`);
+    });
+
+  } catch (error) {
+    console.log("Database connection failed:", error);
+  }
+};
+
+startServer();
 
